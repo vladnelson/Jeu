@@ -27,10 +27,9 @@ $this->load->view('header');
         $fichier=file_get_contents($handle); //On ouvre le fichier 
         
         ?> -->
-        <!-- Code pour générer le mot aléatoire -->
-        
-        <!---->
-       
+    
+ 
+<p id="resultat"></p>
         <div id="FramePendu1" class="container">
             <div class="row" >
                 <div>

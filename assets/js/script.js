@@ -6,6 +6,9 @@ var lemot=""; //Le mots qui doit etre trouver
 var lesMots=['carte','bouche','vladimir','ice','cerf-volant']; //Un tableau de mot 
 var bool = true; //Le boolean qui permet de savoir si c'est l'init(true) ou New Partie(false)
 
+
+
+
 //-----------------------------------------------------------------------------------------------------
 //Evenements lors du chargement de la page
 //-----------------------------------------------------------------------------------------------------
