@@ -18,9 +18,12 @@ $this->load->view('header');
             </table> 
         </div>
         <div  class='col s9'> 
-     <div id="lesinputs" class='row'> 
-         </div>     
-</div>
+            <div id="lesinputs" class='row'> 
+        </div>  
+        <input id="InputJouer" type="text" maxlength="1" >
+        <div id="ErrorMessage"></div>
+        <input id="BtnJouer" type="button" value="Jouer">
+    </div>
         <!-- Code pour récupérer le mot aléatoire -->
         <!-- <?php
         $handle = $name['full_path'];// on attribue le fichier a une variable

@@ -13,15 +13,18 @@ window.onload = function() {
 //-----------------------------------------------------------------------------------------------------
 //Les sélecteurs
 //-----------------------------------------------------------------------------------------------------
-  var NbrC =document.getElementById("NChance"); // Le compteur de chance 
-  var btn = document.getElementById("btnpendu"); //Le bouton Nouvelle partie du pendu 
- 
+  var nbrc =document.getElementById("NChance"); // Le compteur de chance 
+  var btnNewPartie = document.getElementById("btnpendu"); //Le bouton Nouvelle partie du pendu 
+  var SaisieJouer= document.getElementById("InputJouer"); //L'input de jeu
+  var errorJouer= document.getElementById("ErrorMessage"); //Message d'erreur à propos des saisie de jouer
+  var btnJouer=document.getElementById("BtnJouer"); //Bouton jouer
 //-----------------------------------------------------------------------------------------------------
 //Evenement sur le bouton Nouvelle partie
 //-----------------------------------------------------------------------------------------------------
-  btn.addEventListener("click",function(){
+  btnNewPartie.addEventListener("click",function()
+  {
     var un=parseInt(GenereNbrAleatoire(0,5)); // On convertit le nombre aléatoire en entier
-    var lemot=lesMots[un];// On stocke dans la variable un des mot de la liste
+    lemot=lesMots[un];// On stocke dans la variable un des mot de la liste
     console.log(lemot);
     if(bool==true)
     {
@@ -35,6 +38,43 @@ window.onload = function() {
     
     }
   });
+//-----------------------------------------------------------------------------------------------------
+//Evenement à chaque rentrer dans l'input Jouer
+//-----------------------------------------------------------------------------------------------------
+SaisieJouer.addEventListener("input",function()
+{
+  var myRegex = /^[A-Za-z]+$/;
+ if(myRegex.test(SaisieJouer.value))
+ {
+   SaisieJouer.value=SaisieJouer.value.toUpperCase();
+   errorM.remove();
+ }
+ else
+ {
+   var error = SaisieJouer.value;
+   InitSaisieJouer("InputJouer");
+   if(!(error==" "||error==""))
+   {
+      errorJouer.innerHTML="<a id='errorM'>Vous ne pouvez pas utiliser le caractère "+error+" .</a>";
+      document.getElementById("errorM").style.color='red';
+   }
+ }
+});
+//-----------------------------------------------------------------------------------------------------
+//Evenement clique sur le bouton jouer
+//-----------------------------------------------------------------------------------------------------
+btnJouer.addEventListener("click",function()
+{
+ for(d=0;d<lemot.length;d++)
+ {
+   var charMot= lemot[d].toUpperCase();
+  if(charMot==SaisieJouer.value)
+  {
+    document.getElementsByName("ensembleI")[d].value=charMot;
+    InitSaisieJouer("InputJouer");
+  }
+ }
+});
 } 
 //-----------------------------------------------------------------------------------------------------
 // Fonction pour générer un nombre aléatoire entre min et max
@@ -58,7 +98,7 @@ window.onload = function() {
         }
         else
         {
-          document.getElementById("lesinputs").innerHTML+="<div class='input-field col s1' name='ensemble'><input  type='text' /></div>"
+          document.getElementById("lesinputs").innerHTML+="<div class='input-field col s1' name='ensemble'><input name='ensembleI' type='text' /></div>"
         }
       }
     }
@@ -74,3 +114,12 @@ window.onload = function() {
         document.getElementsByName("ensemble")[c].remove();
       }
     }
+
+//-----------------------------------------------------------------------------------------------------
+//Fonction pour initialiser l'input jouer à blanc
+//-----------------------------------------------------------------------------------------------------
+    function InitSaisieJouer(ObjectInit)
+    {
+      document.getElementById(ObjectInit).value="";
+    }
+  
