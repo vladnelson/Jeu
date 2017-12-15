@@ -20,9 +20,9 @@ $this->load->view('header');
         <div  class='col s9'> 
             <div id="lesinputs" class='row'> 
         </div>  
-        <input id="InputJouer" type="text" maxlength="1" >
-        <div id="ErrorMessage"></div>
-        <input id="BtnJouer" type="button" value="Jouer">
+        <div id="LesAlphabet">
+        </div>
+        
     </div>
         <!-- Code pour récupérer le mot aléatoire -->
         <!-- <?php

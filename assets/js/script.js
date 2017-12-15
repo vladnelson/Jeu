@@ -5,7 +5,6 @@ var ancienmot=""; //L'ancien mot avant de faire nouvelle partie
 var lemot=""; //Le mots qui doit etre trouver
 var lesMots=['carte','bouche','vladimir','ice','cerf-volant']; //Un tableau de mot 
 var bool = true; //Le boolean qui permet de savoir si c'est l'init(true) ou New Partie(false)
-
 //-----------------------------------------------------------------------------------------------------
 //Evenements lors du chargement de la page
 //-----------------------------------------------------------------------------------------------------
@@ -15,9 +14,7 @@ window.onload = function() {
 //-----------------------------------------------------------------------------------------------------
   var nbrc =document.getElementById("NChance"); // Le compteur de chance 
   var btnNewPartie = document.getElementById("btnpendu"); //Le bouton Nouvelle partie du pendu 
-  var SaisieJouer= document.getElementById("InputJouer"); //L'input de jeu
-  var errorJouer= document.getElementById("ErrorMessage"); //Message d'erreur à propos des saisie de jouer
-  var btnJouer=document.getElementById("BtnJouer"); //Bouton jouer
+  
 //-----------------------------------------------------------------------------------------------------
 //Evenement sur le bouton Nouvelle partie
 //-----------------------------------------------------------------------------------------------------
@@ -38,43 +35,8 @@ window.onload = function() {
     
     }
   });
-//-----------------------------------------------------------------------------------------------------
-//Evenement à chaque rentrer dans l'input Jouer
-//-----------------------------------------------------------------------------------------------------
-SaisieJouer.addEventListener("input",function()
-{
-  var myRegex = /^[A-Za-z]+$/;
- if(myRegex.test(SaisieJouer.value))
- {
-   SaisieJouer.value=SaisieJouer.value.toUpperCase();
-   errorM.remove();
- }
- else
- {
-   var error = SaisieJouer.value;
-   InitSaisieJouer("InputJouer");
-   if(!(error==" "||error==""))
-   {
-      errorJouer.innerHTML="<a id='errorM'>Vous ne pouvez pas utiliser le caractère "+error+" .</a>";
-      document.getElementById("errorM").style.color='red';
-   }
- }
-});
-//-----------------------------------------------------------------------------------------------------
-//Evenement clique sur le bouton jouer
-//-----------------------------------------------------------------------------------------------------
-btnJouer.addEventListener("click",function()
-{
- for(d=0;d<lemot.length;d++)
- {
-   var charMot= lemot[d].toUpperCase();
-  if(charMot==SaisieJouer.value)
-  {
-    document.getElementsByName("ensembleI")[d].value=charMot;
-    InitSaisieJouer("InputJouer");
-  }
- }
-});
+
+
 } 
 //-----------------------------------------------------------------------------------------------------
 // Fonction pour générer un nombre aléatoire entre min et max
@@ -89,6 +51,7 @@ btnJouer.addEventListener("click",function()
 //-----------------------------------------------------------------------------------------------------
     function CreationInput(unMot)
     {
+      var nomAlphat=65;
       ancienmot=unMot;
       for(var i=0;i<unMot.length;i++)
       {
@@ -98,9 +61,27 @@ btnJouer.addEventListener("click",function()
         }
         else
         {
-          document.getElementById("lesinputs").innerHTML+="<div class='input-field col s1' name='ensemble'><input name='ensembleI' type='text' /></div>"
+          document.getElementById("lesinputs").innerHTML+="<div class='input-field col s1' name='ensemble'><input name='ensembleI' type='text' readonly/></div>"
         }
       }
+      for(var c=0;c<26;c++ )
+      {
+        
+        document.getElementById("LesAlphabet").innerHTML+="<a class='btn-floating btn-large waves-effect waves-light grey' id='&#"+(nomAlphat+c)+"' name='LesAlphats'  >&#"+(nomAlphat+c)+" </a>";
+        //document.getElementsByName("LesAlphats")[c].style.fontSize='15px';
+        
+      }
+      document.getElementById("LesAlphabet").addEventListener("click",function(e)
+      {
+        var laTouche = e.target.innerHTML;
+        console.log(parseInt(laTouche.length));
+        console.log(laTouche.substring(0,1));
+        console.log(laTouche.substring(1,1));
+        var l=document.getElementById(laTouche.substring(0,1));
+        console.log(l);
+        l.classList.remove('grey');
+      });
+      
     }
 
 //-----------------------------------------------------------------------------------------------------
@@ -114,12 +95,3 @@ btnJouer.addEventListener("click",function()
         document.getElementsByName("ensemble")[c].remove();
       }
     }
-
-//-----------------------------------------------------------------------------------------------------
-//Fonction pour initialiser l'input jouer à blanc
-//-----------------------------------------------------------------------------------------------------
-    function InitSaisieJouer(ObjectInit)
-    {
-      document.getElementById(ObjectInit).value="";
-    }
-  
