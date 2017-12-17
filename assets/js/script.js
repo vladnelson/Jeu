@@ -3,8 +3,9 @@
 //-----------------------------------------------------------------------------------------------------
 var ancienmot=""; //L'ancien mot avant de faire nouvelle partie
 var lemot=""; //Le mots qui doit etre trouver
-var lesMots=['carte','bouche','vladimir','ice','voiture','argent','plan','wiscande','darvine','otaria']; //Un tableau de mot 
+var lesMots=['carte','bouche','alfred','ice','voiture','argent','robin','batman','doranco','ottayah']; //Un tableau de mot 
 var IsInit = true; //Le boolean qui permet de savoir si c'est l'init(true) ou New Partie(false)
+var keys={};
 //-----------------------------------------------------------------------------------------------------
 //Evenements lors du chargement de la page
 //-----------------------------------------------------------------------------------------------------
@@ -12,53 +13,117 @@ window.onload = function() {
 //-----------------------------------------------------------------------------------------------------
 //Les sélecteurs
 //-----------------------------------------------------------------------------------------------------
-  var nbrc =document.getElementById("NChance"); // Le compteur de chance 
   var btnNewPartie = document.getElementById("btnpendu"); //Le bouton Nouvelle partie du pendu 
+  var lesBtnAlphas=document.getElementById("LesAlphabet"); //Les boutons des lettres de l'alphabets
 //-----------------------------------------------------------------------------------------------------
 //Evenement sur le bouton Nouvelle partie
 //-----------------------------------------------------------------------------------------------------
   btnNewPartie.addEventListener("click",function()
   {
-    var un=parseInt(GenereNbrAleatoire(0,lesMots.length)); // On convertit le nombre aléatoire en entier
-    lemot=lesMots[un];// On stocke dans la variable un des mot de la liste
-    console.log(lemot);
-    if(IsInit==true)
-    {
-      IsInit=false;// L'intitiation a été faite
-      CreationInput(lemot);
-    }
-    else{
-      SuppressionInput(ancienmot)
-      CreationInput(lemot);
-    
-    }
+    NewPartie() 
   });
 //-----------------------------------------------------------------------------------------------------
 //Evenement sur les boutons de l'alphabet
 //-----------------------------------------------------------------------------------------------------
-  document.getElementById("LesAlphabet").addEventListener("click",function(e)
+lesBtnAlphas.addEventListener("click",function(e)
   {
     var laTouche = e.target.innerHTML;
-    var toucheSelectionner=document.getElementById(laTouche);
-    var IsTrouver=false;
-    toucheSelectionner.classList.remove('grey');
-    for (var x = 0; x < lemot.length; x++)
+    AppuieTouche(laTouche);
+    
+  });
+//-----------------------------------------------------------------------------------------------------
+//Evenement sur les boutons de l'alphabet
+//-----------------------------------------------------------------------------------------------------
+window.addEventListener("keydown",function(e)
+{
+  v=e || event;
+  v.IsUp=e.which ||e.keyCode;
+
+  keys[v.IsUp]=e.type==='keydown';
+
+  if(keys[16])
+  {
+    NewPartie();
+    keys[16]=false;
+  }
+  var laTouche=e.key.toUpperCase();
+  AppuieTouche(laTouche);
+  
+});
+} 
+
+//-----------------------------------------------------------------------------------------------------
+// Fonction pour générer une nouvelle partie
+//-----------------------------------------------------------------------------------------------------
+function NewPartie()
+{
+  var un=parseInt(GenereNbrAleatoire(0,lesMots.length)); // On convertit le nombre aléatoire en entier
+  lemot=lesMots[un];// On stocke dans la variable un des mot de la liste
+  console.log(lemot);
+  if(IsInit==true)
+  {
+    IsInit=false;// L'intitiation a été faite
+    CreationInput(lemot);
+  }
+  else{
+    SuppressionInput(ancienmot)
+    CreationInput(lemot);
+  
+  }
+}
+
+//-----------------------------------------------------------------------------------------------------
+// Fonction lorsqu'on sélection une touche ou un clique 
+//-----------------------------------------------------------------------------------------------------
+function AppuieTouche(laTouche)
+{
+  var nbrc =document.getElementById("NChance"); // Le compteur de chance 
+  var toucheSelectionner=document.getElementById(laTouche);
+  var IsTrouver=false;
+  var IsPlein=true;
+  var InputSelectionner= document.getElementsByName("ensembleI");
+  var _nbChance=parseInt(nbrc.innerHTML);
+
+  if(_nbChance>0)
+  {
+    if(toucheSelectionner!=null)
     {
-      if(lemot[x].toUpperCase()==laTouche)
+      
+      toucheSelectionner.classList.remove('grey');
+      for (var x = 0; x < lemot.length; x++)
       {
-        toucheSelectionner.classList.add('green');
-        IsTrouver=true;
-        document.getElementsByName("ensembleI")[x].value=laTouche;
+        if(lemot[x].toUpperCase()==laTouche)
+        {
+          toucheSelectionner.classList.add('green');
+          IsTrouver=true;
+          InputSelectionner[x].value=laTouche;
+        }
+        if(InputSelectionner[x].value=="")
+        {
+          IsPlein=false;
+        }
+      }
+      if(IsTrouver==false )
+      {
+        toucheSelectionner.classList.add('disabled');
+        toucheSelectionner.style.backgroundColor="red";
+        nbrc.innerHTML=_nbChance-1;
+        if( parseInt(nbrc.innerHTML) ==0)
+        {
+         alert("You lose !!");
+        }
+      }
+      if(IsPlein==true)
+      {
+        alert("Vous avez gagner !");
       }
     }
-    if(IsTrouver==false)
-    {
-      toucheSelectionner.classList.add('red');
-      nbrc.innerHTML=parseInt(nbrc.innerHTML)-1;
-    }
-    IsTrouver=false;
-  });
-} 
+  }
+  else
+  {
+    console.log("c fini");
+  }
+}
 //-----------------------------------------------------------------------------------------------------
 // Fonction pour générer un nombre aléatoire entre min et max
 //-----------------------------------------------------------------------------------------------------
