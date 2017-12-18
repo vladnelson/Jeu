@@ -6,6 +6,7 @@ var lemot=""; //Le mots qui doit etre trouver
 var lesMots=['carte','bouche','alfred','ice','voiture','argent','robin','batman','doranco','ottayah']; //Un tableau de mot 
 var IsInit = true; //Le boolean qui permet de savoir si c'est l'init(true) ou New Partie(false)
 var keys={};
+var NChance = 7;
 //-----------------------------------------------------------------------------------------------------
 //Evenements lors du chargement de la page
 //-----------------------------------------------------------------------------------------------------
@@ -83,7 +84,7 @@ function AppuieTouche(laTouche)
   var IsPlein=true;
   var InputSelectionner= document.getElementsByName("ensembleI");
   var _nbChance=parseInt(nbrc.innerHTML);
-
+  
   if(_nbChance>0)
   {
     if(toucheSelectionner!=null)
@@ -105,23 +106,29 @@ function AppuieTouche(laTouche)
       }
       if(IsTrouver==false )
       {
-        toucheSelectionner.classList.add('disabled');
-        toucheSelectionner.style.backgroundColor="red";
-        nbrc.innerHTML=_nbChance-1;
-        if( parseInt(nbrc.innerHTML) ==0)
+        toucheSelectionner.classList.add('disableB');
+        //toucheSelectionner.classList.add('red');
+        NChance--;
+        nbrc.innerHTML=NChance;
+        if(NChance ==0)
         {
-         alert("You lose !!");
+          setTimeout(function(){alert("You lose !!");},1);
+          
         }
       }
       if(IsPlein==true)
       {
-        alert("Vous avez gagner !");
+        setTimeout(function(){alert("Vous avez gagner !");},1); // Asynchrone
+        
+        NChance=7;
       }
     }
   }
   else
   {
+    
     console.log("c fini");
+    NChance=7;
   }
 }
 //-----------------------------------------------------------------------------------------------------
@@ -161,7 +168,7 @@ function AppuieTouche(laTouche)
       { 
         _lesBoutonsAlphabets.innerHTML+="<a class='btn-floating btn-large waves-effect waves-light grey' id='&#"+(_codeAlphat+c)+"' name='LesAlphats'  >&#"+(_codeAlphat+c)+"</a>";
       } 
-      _nbrc.innerHTML=7;     
+      _nbrc.innerHTML=NChance;     
     }
 
 //-----------------------------------------------------------------------------------------------------

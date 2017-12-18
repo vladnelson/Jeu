@@ -37,7 +37,7 @@ $this->load->view('header');
         <div id="FramePendu1" class="container">
             <div class="row" >
                 <div>
-                    <p> Chance : <a id="NChance">7</a></p>
+                    <p> Chance : <a id="NChance"></a></p>
                  
                 </div>
             </div>
