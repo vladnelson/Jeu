@@ -32,6 +32,10 @@ $this->load->view('header');
                         <div>
                             <p> Chance : <a id="NChance"></a></p>
                         </div>
+                        <div id="placePendu">
+                            
+                        </div>
+                        <a class="btn" onclick="Materialize.toast('I am a toast', 4000)">Toast!</a>
                     </div>
                 </div>
             </div>

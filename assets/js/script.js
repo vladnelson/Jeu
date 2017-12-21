@@ -82,9 +82,10 @@ function AppuieTouche(laTouche)
   var toucheSelectionner=document.getElementById(laTouche);
   var IsTrouver=false;
   var IsPlein=true;
+  var IsGagner=false;
   var InputSelectionner= document.getElementsByName("ensembleI");
   
-  if(NChance>0)
+  if(NChance>0 || IsGagner==true )
   {
     if(toucheSelectionner!=null)
     {
@@ -109,6 +110,9 @@ function AppuieTouche(laTouche)
         //toucheSelectionner.classList.add('red');
         NChance--;
         nbrc.innerHTML=NChance;
+        var x = 1;
+        x+=(7-NChance);
+        document.getElementById("imgPendu").src="../../assets/Images/"+x+".png";
         if(NChance ==0)
         {
           setTimeout(function(){alert("You lose !!");},2);
@@ -117,8 +121,11 @@ function AppuieTouche(laTouche)
       }
       if(IsPlein==true)
       {
-        setTimeout(function(){alert("Vous avez gagner !");},2); // Asynchrone
-        
+       // setTimeout(function(){alert("Vous avez gagner !");},2); Asynchrone
+        IsGagner=true; 
+        var limage = document.getElementById("imgPendu");
+        limage.style.width="300px";
+        limage.src="../../assets/Images/bravo.png";
        
       }
     }
@@ -126,7 +133,7 @@ function AppuieTouche(laTouche)
   else
   {
     
-    console.log("c fini");
+    Materialize.toast('Cette partie est finie ', 4000);
   
   }
 }
@@ -141,6 +148,7 @@ function AppuieTouche(laTouche)
 //-----------------------------------------------------------------------------------------------------
 // Fonction pour afficher l'enplacement d'entrée d'un mot
 //-----------------------------------------------------------------------------------------------------
+Materialize.toast('I am a toast!', 4000);
     function CreationInput(_unMot)
     {
       var _nbrc =document.getElementById("NChance");
@@ -149,7 +157,7 @@ function AppuieTouche(laTouche)
       var _codeAlphat=65;
       ancienmot=_unMot;
       NChance=7;
-    
+    document.getElementById("placePendu").innerHTML="<img id='imgPendu' src='../../assets/Images/1.png' />"
       //Boucle jusqu'a la fin de la taille du mot
       for(var i=0;i<_unMot.length;i++)
       {

@@ -187,6 +187,7 @@ jQuery.extend( jQuery.easing,
 	}
 });
 
+
 /*
  *
  * TERMS OF USE - EASING EQUATIONS
