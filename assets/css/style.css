@@ -50,7 +50,7 @@
 
   .disableB
   {
-    background-color: red !important;
+    background-color: red ;
     box-shadow: none;
     color:white !important;
     cursor: default;

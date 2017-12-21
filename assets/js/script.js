@@ -6,7 +6,7 @@ var lemot=""; //Le mots qui doit etre trouver
 var lesMots=['carte','bouche','alfred','ice','voiture','argent','robin','batman','doranco','ottayah']; //Un tableau de mot 
 var IsInit = true; //Le boolean qui permet de savoir si c'est l'init(true) ou New Partie(false)
 var keys={};
-var NChance = 7;
+var NChance;
 //-----------------------------------------------------------------------------------------------------
 //Evenements lors du chargement de la page
 //-----------------------------------------------------------------------------------------------------
@@ -37,15 +37,16 @@ lesBtnAlphas.addEventListener("click",function(e)
 //-----------------------------------------------------------------------------------------------------
 window.addEventListener("keydown",function(e)
 {
+
   v=e || event;
   v.IsUp=e.which ||e.keyCode;
 
   keys[v.IsUp]=e.type==='keydown';
 
-  if(keys[16])
+  if(keys[119])
   {
     NewPartie();
-    keys[16]=false;
+    keys[119]=false;
   }
   var laTouche=e.key.toUpperCase();
   AppuieTouche(laTouche);
@@ -58,8 +59,7 @@ window.addEventListener("keydown",function(e)
 //-----------------------------------------------------------------------------------------------------
 function NewPartie()
 {
-  var un=parseInt(GenereNbrAleatoire(0,lesMots.length)); // On convertit le nombre aléatoire en entier
-  lemot=lesMots[un];// On stocke dans la variable un des mot de la liste
+  lemot=lesMots[GenereNbrAleatoire(0,lesMots.length)];// On stocke dans la variable un des mot de la liste
   console.log(lemot);
   if(IsInit==true)
   {
@@ -83,9 +83,8 @@ function AppuieTouche(laTouche)
   var IsTrouver=false;
   var IsPlein=true;
   var InputSelectionner= document.getElementsByName("ensembleI");
-  var _nbChance=parseInt(nbrc.innerHTML);
   
-  if(_nbChance>0)
+  if(NChance>0)
   {
     if(toucheSelectionner!=null)
     {
@@ -104,7 +103,7 @@ function AppuieTouche(laTouche)
           IsPlein=false;
         }
       }
-      if(IsTrouver==false )
+      if(IsTrouver==false && toucheSelectionner.className  =="btn-floating btn-large waves-effect waves-light")
       {
         toucheSelectionner.classList.add('disableB');
         //toucheSelectionner.classList.add('red');
@@ -112,15 +111,15 @@ function AppuieTouche(laTouche)
         nbrc.innerHTML=NChance;
         if(NChance ==0)
         {
-          setTimeout(function(){alert("You lose !!");},1);
+          setTimeout(function(){alert("You lose !!");},2);
           
         }
       }
       if(IsPlein==true)
       {
-        setTimeout(function(){alert("Vous avez gagner !");},1); // Asynchrone
+        setTimeout(function(){alert("Vous avez gagner !");},2); // Asynchrone
         
-        NChance=7;
+       
       }
     }
   }
@@ -128,7 +127,7 @@ function AppuieTouche(laTouche)
   {
     
     console.log("c fini");
-    NChance=7;
+  
   }
 }
 //-----------------------------------------------------------------------------------------------------
@@ -136,7 +135,7 @@ function AppuieTouche(laTouche)
 //-----------------------------------------------------------------------------------------------------
     function GenereNbrAleatoire(min, max) 
     {
-      return Math.random() * (max - min) + min;
+      return parseInt(Math.random() * (max - min) + min);
     }
 
 //-----------------------------------------------------------------------------------------------------
@@ -149,7 +148,8 @@ function AppuieTouche(laTouche)
       var _lesBoutonsAlphabets =document.getElementById("LesAlphabet");
       var _codeAlphat=65;
       ancienmot=_unMot;
-      
+      NChance=7;
+    
       //Boucle jusqu'a la fin de la taille du mot
       for(var i=0;i<_unMot.length;i++)
       {
