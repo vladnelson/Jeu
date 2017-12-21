@@ -113,11 +113,7 @@ function AppuieTouche(laTouche)
         var x = 1;
         x+=(7-NChance);
         document.getElementById("imgPendu").src="../../assets/Images/"+x+".png";
-        if(NChance ==0)
-        {
-          setTimeout(function(){alert("You lose !!");},2);
-          
-        }
+      
       }
       if(IsPlein==true)
       {

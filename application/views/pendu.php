@@ -35,7 +35,7 @@ $this->load->view('header');
                         <div id="placePendu">
                             
                         </div>
-                        <a class="btn" onclick="Materialize.toast('I am a toast', 4000)">Toast!</a>
+                
                     </div>
                 </div>
             </div>
